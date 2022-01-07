@@ -1,3 +1,5 @@
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.scss';
 import '@fortawesome/fontawesome-free/js/all.js';
 import localStorageController from "./local_storage_controller.js";
