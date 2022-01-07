@@ -5,7 +5,7 @@ const displayController = (() => {
     projects.forEach((project, index) => {
       // table
       let table = document.createElement('table');
-      table.classList.add('table', 'table-striped', 'table-bordered', 'mt-4');
+      table.classList.add('table', 'table-striped', 'table-bordered');
       container.appendChild(table);
 
       // thead
