@@ -9,7 +9,7 @@ const tasksController = (() => {
     return {
       description: description,
       date: date,
-      priority: priority,
+      priority: parseInt(priority),
       status: status
     };
   }
