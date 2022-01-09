@@ -6,17 +6,50 @@
     <title>Todo list</title>
 </head>
 <body class="bg-light">
+  <!-- Navbar -->
   <nav class="bg-dark">
     <h1 class="text-light">To Do List</h1>
   </nav>
 
-  <div class="d-flex justify-content-center text-success resize-on-hover mt-4" title="Create a new project">
-    <i class="fas fa-plus-circle fa-3x"></i>
+  <!-- New project button -->
+  <div class="d-flex justify-content-center text-success resize-on-hover mt-4">
+    <i class="fas fa-plus-circle fa-3x" title="Create a new project" data-toggle="modal" data-target="#newProjectModal"></i>
   </div>
 
-  <div id="container" class="p-4">
+  <!-- Container for projects tables -->
+  <div id="container" class="p-4"></div>
 
+  <!-- New project modal -->
+  <div class="modal fade" id="newProjectModal" tabindex="-1" aria-labelledby="newProject" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-dark">
+        <form id=newProjectForm>
+          <div class="modal-header text-center">
+            <h3 class="modal-title w-100">Create a new project</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body mx-5">
+            <div class="form-group row my-4">
+              <label for="new-project-title" class="col-sm-2 col-form-label">Title:</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="new-project-title" placeholder="50 characters maximum" maxlength="50" required="required">
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer justify-content-center">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Create project</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
+
+  <!-- New task modal -->
 
   <script src="index.bundle.js"></script>
 </body>
