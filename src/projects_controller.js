@@ -146,7 +146,16 @@ const projectsController = (() => {
     sortProject(index, project.sort);
   }
 
-  return { getProjects, createProject, removeProject, collapseProject, sortProject, addTask };
+  function removeTask(projectIndex, taskIndex) {
+    let projects = localStorageController.getLocalStorage();
+    let project = projects[projectIndex];
+    let tasks = project.tasks;
+    tasks.splice(taskIndex, 1);
+
+    localStorageController.updateLocalStorage(projects);
+  }
+
+  return { getProjects, createProject, removeProject, collapseProject, sortProject, addTask, removeTask };
 })();
 
 export default projectsController;

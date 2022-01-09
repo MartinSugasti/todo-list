@@ -215,7 +215,7 @@ const displayController = (() => {
         table.appendChild(tbody);
 
         project.tasks.forEach((task, taskIndex) =>{
-          appendTaskToBody(tbody, task, taskIndex);
+          appendTaskToBody(tbody, index, task, taskIndex);
         })
       }
     });
@@ -240,7 +240,7 @@ const displayController = (() => {
     span.appendChild(i);
   }
 
-  function appendTaskToBody(body, task, taskIndex) {
+  function appendTaskToBody(body, projectIndex, task, taskIndex) {
     let tr = document.createElement('tr');
     body.appendChild(tr);
 
@@ -290,7 +290,11 @@ const displayController = (() => {
       ['mx-2', 'resize-on-hover'],
       {'data-index': taskIndex},
       ['fas', 'fa-trash-alt'],
-      {}
+      {},
+      function() {
+        projectsController.removeTask(projectIndex, taskIndex);
+        displayProjects();
+      }
     )
   }
 
