@@ -50,6 +50,52 @@
   </div>
 
   <!-- New task modal -->
+  <div class="modal fade" id="newTaskModal" tabindex="-1" aria-labelledby="newTask" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-dark">
+        <form id=newTaskForm>
+          <input id="new-task-project-index" type="hidden">
+
+          <div class="modal-header text-center">
+            <h3 class="modal-title w-100">Create a new task</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body mx-5">
+            <div class="form-group row my-4">
+              <label for="new-task-description" class="col-sm-4 col-form-label">Description:</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="new-task-description" placeholder="50 characters maximum" maxlength="50" required="required">
+              </div>
+            </div>
+            <div class="form-group row my-4">
+              <label for="new-task-date" class="col-sm-4 col-form-label">Date:</label>
+              <div class="col-sm-8">
+                <input type="date" class="form-control" id="new-task-date">
+              </div>
+            </div>
+            <div class="form-group row my-4">
+              <label for="new-task-priority" class="col-sm-4 col-form-label">Priority:</label>
+              <div class="col-sm-8">
+                <input type="number" class="form-control" id="new-task-priority" min="1" max="5" required="required">
+              </div>
+            </div>
+            <div class="form-group row my-4">
+              <label for="new-task-status" class="col-2 mb-0">Done?</label>
+              <input type="checkbox" id="new-task-status" class="align-self-center" name="new-task-status">
+            </div>
+          </div>
+
+          <div class="modal-footer justify-content-center">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Create task</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <script src="index.bundle.js"></script>
 </body>

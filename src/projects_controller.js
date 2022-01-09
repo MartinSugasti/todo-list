@@ -1,4 +1,5 @@
 import localStorageController from "./local_storage_controller.js";
+import tasksController from "./tasks_controller.js";
 
 const defaultProjects = [
   {
@@ -8,18 +9,18 @@ const defaultProjects = [
     tasks: [
       {
         description: 'Buy tickets',
-        date: '04/06/2022',
+        date: '2022-05-20',
         priority: 5,
         status: true
       },
       {
-        description: 'Yosemite booking',
+        description: 'Car rental',
         date: '',
         priority: 3,
         status: false
       },
       {
-        description: 'Car rental',
+        description: 'Yosemite booking',
         date: '',
         priority: 3,
         status: false
@@ -32,16 +33,16 @@ const defaultProjects = [
     collapse: true,
     tasks: [
       {
-        description: 'Register in Taxes Administrator',
-        date: '10/02/2022',
-        priority: 5,
-        status: false
-      },
-      {
         description: 'Meeting with accountant',
-        date: '04/01/2022',
+        date: '2022-01-28',
         priority: 3,
         status: true
+      },
+      {
+        description: 'Register in Taxes Administrator',
+        date: '2022-02-20',
+        priority: 5,
+        status: false
       },
       {
         description: 'Check company on register',
@@ -57,16 +58,16 @@ const defaultProjects = [
     collapse: false,
     tasks: [
       {
-        description: 'Buy tickets',
-        date: '04/09/2022',
-        priority: 5,
-        status: true
-      },
-      {
         description: 'Get info about aurora',
         date: '',
         priority: 3,
         status: false
+      },
+      {
+        description: 'Buy tickets',
+        date: '2022-09-14',
+        priority: 5,
+        status: true
       }
     ]
   }
@@ -124,13 +125,28 @@ const projectsController = (() => {
     return function (a, b) {
       if (typeof a[property] === 'boolean') {
         return (a[property] === b[property]) ? 0 : a[property] ? -1 : 1;
+      } else if (typeof a[property] === 'boolean') {
+        let aLower = a[property].toLowerCase()
+        let bLower = b[property].toLowerCase()
+        return (aLower === bLower) ? 0 : (aLower < bLower) ? -1 : (aLower > b[property]) ? 1 : 0;
       } else {
         return (a[property] === b[property]) ? 0 : (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
       }
     }
   }
 
-  return { getProjects, createProject, removeProject, collapseProject, sortProject };
+  function addTask(index, description, date, priority, status) {
+    let projects = localStorageController.getLocalStorage();
+    let project = projects[index];
+    let tasks = project.tasks;
+    let task = tasksController.createTask(description, date, priority, status);
+    tasks.push(task);
+
+    localStorageController.updateLocalStorage(projects);
+    sortProject(index, project.sort);
+  }
+
+  return { getProjects, createProject, removeProject, collapseProject, sortProject, addTask };
 })();
 
 export default projectsController;

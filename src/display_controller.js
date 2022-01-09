@@ -3,6 +3,7 @@ import projectsController from "./projects_controller.js";
 const displayController = (() => {
   function addBasicFunctionality() {
     addNewProjectFunctionality();
+    addNewTaskFunctionality();
   }
 
   function addNewProjectFunctionality() {
@@ -11,6 +12,22 @@ const displayController = (() => {
 
       let newProjectTitle = document.getElementById('new-project-title').value;
       projectsController.createProject(newProjectTitle)
+
+      displayProjects();
+      closeAllModals();
+    });
+  }
+
+  function addNewTaskFunctionality() {
+    document.getElementById("newTaskForm").addEventListener("submit", function(event){
+      event.preventDefault();
+
+      let index = document.getElementById('new-task-project-index').value;
+      let description = document.getElementById('new-task-description').value;
+      let date = document.getElementById('new-task-date').value;
+      let priority = document.getElementById('new-task-priority').value;
+      let status = document.getElementById('new-task-status').checked;
+      projectsController.addTask(index, description, date, priority, status);
 
       displayProjects();
       closeAllModals();
@@ -159,9 +176,12 @@ const displayController = (() => {
       appendSpanToElement(
         actionsDiv,
         ['mx-3', 'resize-on-hover'],
-        {'data-index': index},
+        {'data-index': index, 'data-toggle': 'modal', 'data-target': '#newTaskModal'},
         ['fas', 'fa-plus-circle'],
-        {"title": "Add a task"}
+        {"title": "Add a task"},
+        function() {
+          addProjectInfoToNewTaskModal(index);
+        }
       )
 
       // remove project span
@@ -272,6 +292,11 @@ const displayController = (() => {
       ['fas', 'fa-trash-alt'],
       {}
     )
+  }
+
+  function addProjectInfoToNewTaskModal(index) {
+    let projectIndexInput = document.getElementById("new-task-project-index");
+    projectIndexInput.setAttribute("value", index);
   }
 
   return { displayProjects, addBasicFunctionality };
