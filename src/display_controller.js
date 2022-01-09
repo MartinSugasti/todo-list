@@ -1,4 +1,3 @@
-import localStorageController from "./local_storage_controller.js";
 import projectsController from "./projects_controller.js";
 
 const displayController = (() => {
@@ -45,7 +44,7 @@ const displayController = (() => {
   function displayProjects() {
     let container = document.getElementById('container');
     container.innerHTML = '';
-    let projects = localStorageController.getLocalStorage();
+    let projects = projectsController.getProjects();
 
     projects.forEach((project, index) => {
       // table
@@ -128,7 +127,11 @@ const displayController = (() => {
         ['text-light', 'resize-on-hover'],
         {'data-index': index},
         ['fas', `fa-chevron-circle-${project.collapse ? 'down' : 'up' }`],
-        {}
+        {},
+        function() {
+          projectsController.collapseProject(index, project.collapse);
+          displayProjects();
+        }
       )
 
       // actions div
