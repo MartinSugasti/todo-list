@@ -49,7 +49,7 @@ const displayController = (() => {
     projects.forEach((project, index) => {
       // table
       let table = document.createElement('table');
-      table.classList.add('table', 'table-striped', 'table-bordered');
+      table.classList.add('table', 'table-striped', 'table-light', 'table-bordered', 'mb-5');
       container.appendChild(table);
 
       // thead
