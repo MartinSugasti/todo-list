@@ -10,19 +10,19 @@ const defaultProjects = [
         description: 'Buy tickets',
         date: '04/06/2022',
         priority: 5,
-        done: true
+        status: true
       },
       {
         description: 'Yosemite booking',
         date: '',
         priority: 3,
-        done: false
+        status: false
       },
       {
         description: 'Car rental',
         date: '',
         priority: 3,
-        done: false
+        status: false
       }
     ]
   },
@@ -35,19 +35,19 @@ const defaultProjects = [
         description: 'Register in Taxes Administrator',
         date: '10/02/2022',
         priority: 5,
-        done: false
+        status: false
       },
       {
         description: 'Meeting with accountant',
         date: '04/01/2022',
         priority: 3,
-        done: true
+        status: true
       },
       {
         description: 'Check company on register',
         date: '',
         priority: 5,
-        done: false
+        status: false
       }
     ]
   },
@@ -60,13 +60,13 @@ const defaultProjects = [
         description: 'Buy tickets',
         date: '04/09/2022',
         priority: 5,
-        done: true
+        status: true
       },
       {
         description: 'Get info about aurora',
         date: '',
         priority: 3,
-        done: false
+        status: false
       }
     ]
   }
@@ -75,9 +75,12 @@ const defaultProjects = [
 const projectsController = (() => {
   function getProjects() {
     let storedProjects = localStorageController.getLocalStorage();
-    let preloadedProjects = storedProjects === null ? defaultProjects : storedProjects;
+    if (storedProjects === null) {
+      storedProjects = defaultProjects;
+      localStorageController.updateLocalStorage(defaultProjects);
+    }
 
-    return preloadedProjects;
+    return storedProjects;
   }
 
   function createProject(title) {
@@ -95,23 +98,39 @@ const projectsController = (() => {
 
   function removeProject(index) {
     let projects = localStorageController.getLocalStorage();
-    if (index > -1) {
-      projects.splice(index, 1);
-    }
+    projects.splice(index, 1);
 
     localStorageController.updateLocalStorage(projects);
   }
 
   function collapseProject(index, collapse) {
     let projects = localStorageController.getLocalStorage();
-    if (index > -1) {
-      projects[index].collapse = !collapse;
-    }
+    projects[index].collapse = !collapse;
 
     localStorageController.updateLocalStorage(projects);
   }
 
-  return { getProjects, createProject, removeProject, collapseProject };
+  function sortProject(index, property) {
+    let projects = localStorageController.getLocalStorage();
+    let project = projects[index];
+    let tasks = project.tasks;
+    tasks.sort(compare(property));
+    project.sort = property;
+
+    localStorageController.updateLocalStorage(projects);
+  }
+
+  function compare(property) {
+    return function (a, b) {
+      if (typeof a[property] === 'boolean') {
+        return (a[property] === b[property]) ? 0 : a[property] ? -1 : 1;
+      } else {
+        return (a[property] === b[property]) ? 0 : (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+      }
+    }
+  }
+
+  return { getProjects, createProject, removeProject, collapseProject, sortProject };
 })();
 
 export default projectsController;

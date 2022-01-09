@@ -80,7 +80,11 @@ const displayController = (() => {
         ['mx-2', 'resize-on-hover'],
         {'data-index': index},
         ['fas', 'fa-sort-alpha-down', `${project.sort === 'description' ? 'text-secondary' : null }`],
-        {}
+        {},
+        function() {
+          projectsController.sortProject(index, 'description');
+          displayProjects();
+        }
       )
 
       // date sort span
@@ -89,7 +93,11 @@ const displayController = (() => {
         ['mx-2', 'resize-on-hover'],
         {'data-index': index},
         ['fas', 'fa-calendar-alt', `${project.sort === 'date' ? 'text-secondary' : null }`],
-        {}
+        {},
+        function() {
+          projectsController.sortProject(index, 'date');
+          displayProjects();
+        }
       )
 
       // priority sort span
@@ -98,7 +106,11 @@ const displayController = (() => {
         ['mx-2', 'resize-on-hover'],
         {'data-index': index},
         ['fas', 'fa-exclamation', `${project.sort === 'priority' ? 'text-secondary' : null }`],
-        {}
+        {},
+        function() {
+          projectsController.sortProject(index, 'priority');
+          displayProjects();
+        }
       )
 
       // status sort span
@@ -107,7 +119,11 @@ const displayController = (() => {
         ['mx-2', 'resize-on-hover'],
         {'data-index': index},
         ['fas', 'fa-tasks', `${project.sort === 'status' ? 'text-secondary' : null }`],
-        {}
+        {},
+        function() {
+          projectsController.sortProject(index, 'status');
+          displayProjects();
+        }
       )
 
       // div to show project name and collapse option
@@ -231,9 +247,9 @@ const displayController = (() => {
     tr.appendChild(statusTd);
     appendSpanToElement(
       statusTd,
-      [`${task.done ? 'text-success' : 'text-danger'}`],
+      [`${task.status ? 'text-success' : 'text-danger'}`],
       {},
-      ['fas', 'fa-check', `${task.done ? 'fa-check' : 'fa-times'}`],
+      ['fas', 'fa-check', `${task.status ? 'fa-check' : 'fa-times'}`],
       {}
     )
 
