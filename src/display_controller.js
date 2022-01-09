@@ -49,7 +49,7 @@ const displayController = (() => {
     projects.forEach((project, index) => {
       // table
       let table = document.createElement('table');
-      table.classList.add('table', 'table-striped', 'table-bordered');
+      table.classList.add('table', 'table-striped', 'table-light', 'mb-5');
       container.appendChild(table);
 
       // thead
@@ -61,7 +61,7 @@ const displayController = (() => {
       thead.appendChild(tr);
 
       let th = document.createElement('th');
-      th.classList.add('text-center', 'table-dark', 'p-2');
+      th.classList.add('border-0', 'text-center', 'table-dark', 'p-2');
       th.setAttribute("colspan", "5");
       tr.appendChild(th);
 
@@ -180,6 +180,7 @@ const displayController = (() => {
       // add body if project is not collapsed
       if (!project.collapse) {
         let lastTr = document.createElement('tr');
+        lastTr.classList.add('border-0');
         thead.appendChild(lastTr);
 
         ['Task', 'Date', 'Priority', 'Status', 'Actions'].forEach((columnName) => {
@@ -190,7 +191,7 @@ const displayController = (() => {
         });
 
         let tbody = document.createElement('tbody');
-        tbody.classList.add('border-top-0');
+        tbody.classList.add('border-0');
         table.appendChild(tbody);
 
         project.tasks.forEach((task, taskIndex) =>{
@@ -225,7 +226,7 @@ const displayController = (() => {
 
     // description column
     let descriptionTd = document.createElement('td');
-    descriptionTd.classList.add('align-middle');
+    descriptionTd.classList.add('align-middle', 'text-center');
     descriptionTd.innerHTML = task.description;
     tr.appendChild(descriptionTd);
 
