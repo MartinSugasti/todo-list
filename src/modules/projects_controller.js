@@ -54,7 +54,7 @@ const projectsController = (() => {
     return function (a, b) {
       if (typeof a[property] === 'boolean') {
         return (a[property] === b[property]) ? 0 : a[property] ? -1 : 1;
-      } else if (typeof a[property] === 'boolean') {
+      } else if (typeof a[property] === 'string') {
         let aLower = a[property].toLowerCase()
         let bLower = b[property].toLowerCase()
         return (aLower === bLower) ? 0 : (aLower < bLower) ? -1 : (aLower > b[property]) ? 1 : 0;
