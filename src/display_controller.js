@@ -3,7 +3,7 @@ import projectsController from "./projects_controller.js";
 const displayController = (() => {
   function addBasicFunctionality() {
     addNewProjectFunctionality();
-    addNewTaskFunctionality();
+    addTaskFunctionality();
   }
 
   function addNewProjectFunctionality() {
@@ -18,16 +18,21 @@ const displayController = (() => {
     });
   }
 
-  function addNewTaskFunctionality() {
-    document.getElementById("newTaskForm").addEventListener("submit", function(event){
+  function addTaskFunctionality() {
+    document.getElementById("taskForm").addEventListener("submit", function(event){
       event.preventDefault();
 
-      let index = document.getElementById('new-task-project-index').value;
-      let description = document.getElementById('new-task-description').value;
-      let date = document.getElementById('new-task-date').value;
-      let priority = document.getElementById('new-task-priority').value;
-      let status = document.getElementById('new-task-status').checked;
-      projectsController.addTask(index, description, date, priority, status);
+      let description = document.getElementById('task-description').value;
+      let date = document.getElementById('task-date').value;
+      let priority = document.getElementById('task-priority').value;
+      let status = document.getElementById('task-status').checked;
+      let projectIndex = document.getElementById('task-project-index').value;
+      let taskIndex = document.getElementById("task-index").value;
+      if (taskIndex !== '') {
+        projectsController.editTask(projectIndex, taskIndex, description, date, priority, status);
+      } else {
+        projectsController.addTask(projectIndex, description, date, priority, status);
+      }
 
       displayProjects();
       closeAllModals();
@@ -176,11 +181,13 @@ const displayController = (() => {
       appendSpanToElement(
         actionsDiv,
         ['mx-3', 'resize-on-hover'],
-        {'data-index': index, 'data-toggle': 'modal', 'data-target': '#newTaskModal'},
+        {'data-toggle': 'modal', 'data-target': '#taskModal'},
         ['fas', 'fa-plus-circle'],
         {"title": "Add a task"},
         function() {
-          addProjectInfoToNewTaskModal(index);
+          // this function is on here in order to remove taskIndex from modal if the modal was previosuly shown to edit a task
+          removeTaskInfoFromTaskModal();
+          addProjectInfoToTaskModal(index);
         }
       )
 
@@ -281,9 +288,13 @@ const displayController = (() => {
     appendSpanToElement(
       actionsTd,
       ['mx-2', 'resize-on-hover'],
-      {'data-index': taskIndex},
+      {'data-toggle': 'modal', 'data-target': '#taskModal'},
       ['fas', 'fa-edit'],
-      {}
+      {},
+      function() {
+        addProjectInfoToTaskModal(projectIndex);
+        addTaskInfoToTaskModal(projectIndex, taskIndex);
+      }
     )
     appendSpanToElement(
       actionsTd,
@@ -298,9 +309,28 @@ const displayController = (() => {
     )
   }
 
-  function addProjectInfoToNewTaskModal(index) {
-    let projectIndexInput = document.getElementById("new-task-project-index");
+  function removeTaskInfoFromTaskModal() {
+    document.getElementById("task-index").value = '';
+    document.getElementById('task-description').value = '';
+    document.getElementById('task-date').value = '';
+    document.getElementById('task-priority').value = '';
+    document.getElementById('task-status').checked = false;
+  }
+
+  function addProjectInfoToTaskModal(index) {
+    let projectIndexInput = document.getElementById("task-project-index");
     projectIndexInput.setAttribute("value", index);
+  }
+
+  function addTaskInfoToTaskModal(projectIndex, taskIndex) {
+    let taskIndexInput = document.getElementById("task-index");
+    taskIndexInput.setAttribute("value", taskIndex);
+
+    let task = projectsController.getTask(projectIndex, taskIndex);
+    document.getElementById('task-description').value = task.description;
+    document.getElementById('task-date').value = task.date;
+    document.getElementById('task-priority').value = task.priority;
+    document.getElementById('task-status').checked = task.status;
   }
 
   return { displayProjects, addBasicFunctionality };

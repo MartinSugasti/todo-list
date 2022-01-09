@@ -155,7 +155,23 @@ const projectsController = (() => {
     localStorageController.updateLocalStorage(projects);
   }
 
-  return { getProjects, createProject, removeProject, collapseProject, sortProject, addTask, removeTask };
+  function editTask(projectIndex, taskIndex, description, date, priority, status) {
+    let projects = localStorageController.getLocalStorage();
+    let project = projects[projectIndex];
+    let tasks = project.tasks;
+    tasks[taskIndex] = tasksController.createTask(description, date, priority, status);
+
+    localStorageController.updateLocalStorage(projects);
+  }
+
+  function getTask(projectIndex, taskIndex) {
+    let projects = localStorageController.getLocalStorage();
+    let project = projects[projectIndex];
+    let tasks = project.tasks;
+    return tasks[taskIndex];
+  }
+
+  return { getProjects, createProject, removeProject, collapseProject, sortProject, addTask, removeTask, editTask, getTask };
 })();
 
 export default projectsController;
