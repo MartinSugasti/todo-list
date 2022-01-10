@@ -1,16 +1,20 @@
 const tasksController = (() => {
   function createTask(description, date, priority, status) {
+    let formattedDate;
     if (date === '') {
-      date = '-';
+      formattedDate = '-';
     }
+
+    let formattedStatus;
     if (status === 'on') {
-      status = true;
+      formattedStatus = true;
     }
+
     return {
-      description: description,
-      date: date,
-      priority: parseInt(priority),
-      status: status
+      description,
+      date: formattedDate,
+      priority: parseInt(priority, 10),
+      status: formattedStatus,
     };
   }
 
