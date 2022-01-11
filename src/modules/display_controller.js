@@ -113,15 +113,30 @@ const displayController = (() => {
     );
   }
 
+  function sortProjectsLinks(a, b) {
+    return a.innerHTML.toLowerCase().localeCompare(b.innerHTML.toLowerCase());
+  }
+
   function displayProjects() {
+    const projectsList = document.getElementById('projectsList');
+    projectsList.innerHTML = '';
+    const projectsLinks = [];
     const container = document.getElementById('container');
     container.innerHTML = '';
     const projects = projectsController.getProjects();
 
     projects.forEach((project, index) => {
+      // add link to projects links in order to add them to the projects list
+      const a = document.createElement('a');
+      a.classList.add('dropdown-item');
+      a.setAttribute('href', `#project${index}`);
+      a.innerHTML = project.title;
+      projectsLinks.push(a);
+
       // table
       const table = document.createElement('table');
       table.classList.add('table', 'table-striped', 'table-light', 'mb-5');
+      table.setAttribute('id', `project${index}`);
       container.appendChild(table);
 
       // thead
@@ -280,6 +295,11 @@ const displayController = (() => {
           appendTaskToBody(tbody, index, task, taskIndex);
         });
       }
+    });
+
+    // Add the projects links to the project list alphabetically ordered
+    projectsLinks.sort(sortProjectsLinks).forEach((a) => {
+      projectsList.appendChild(a);
     });
   }
 
