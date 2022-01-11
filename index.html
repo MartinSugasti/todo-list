@@ -6,9 +6,18 @@
 </head>
 <body class="bg-light">
   <!-- Navbar -->
-  <nav class="bg-dark">
-    <h1 class="text-light">To Do List</h1>
-  </nav>
+  <header class="bg-dark d-flex justify-content-between align-items-center px-3">
+    <div class="dropdown">
+      <a href="#" class="dropdown" id="dropdownProjectsList" data-toggle="dropdown" aria-expanded="false">
+        <i class="fas fa-bars fa-2x text-light"></i>
+      </a>
+
+      <div id="projectsList" class="dropdown-menu" aria-labelledby="dropdownProjectsList">
+      </div>
+    </div>
+    <h1 class="text-light mb-0">To Do List</h1>
+    <a href="https://github.com/MartinSugasti/todo-list"><i class="fab fa-github fa-2x text-light"></i></a>
+  </header>
 
   <!-- New project button -->
   <div class="d-flex justify-content-center text-success resize-on-hover mt-4">
