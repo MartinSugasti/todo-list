@@ -1,8 +1,8 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/style.scss';
-import '@fortawesome/fontawesome-free/js/all.js';
-import displayController from "./modules/display_controller.js";
+import '@fortawesome/fontawesome-free/js/all';
+import displayController from './modules/display_controller';
 
 displayController.addBasicFunctionality();
 displayController.displayProjects();
